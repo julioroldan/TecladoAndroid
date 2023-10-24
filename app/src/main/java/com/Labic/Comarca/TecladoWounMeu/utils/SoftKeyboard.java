@@ -631,7 +631,8 @@ public class SoftKeyboard extends InputMethodService
     private void handleCharacter(int primaryCode, int[] keyCodes) {
         if (isInputViewShown()) {
             if (mInputView.isShifted()) {
-                primaryCode = Character.toUpperCase(primaryCode);
+                if (primaryCode!=349)
+                    primaryCode = Character.toUpperCase(primaryCode);
             }
         }
         if (isAlphabet(primaryCode) && mPredictionOn) {
@@ -639,22 +640,31 @@ public class SoftKeyboard extends InputMethodService
                 case 99:
                     mComposing.append("ch");
                     break;
+                case 67:
+                    mComposing.append("CH");
+                    break;
                 case 188:
-                    mComposing.append("t\'");
+                    if (mInputView.isShifted())
+                        mComposing.append("TꞋ");
+                        else
+                    mComposing.append("tꞌ");
                     break;
                 case 189:
-                    mComposing.append("k\'");
+                    if (mInputView.isShifted())
+                        mComposing.append("KꞋ");
+                        else
+                    mComposing.append("kꞌ");
                     break;
                 case 190:
-                    mComposing.append("p\'");
+                    if (mInputView.isShifted())
+                        mComposing.append("PꞋ");
+                    else
+                    mComposing.append("pꞌ");
                     break;
                 case 519:
                     mComposing.append("ẽ");
                     break;
                 case 349:
-                    if (mInputView.isShifted())
-                        mComposing.append("Ʌ̃");
-                    else
                         mComposing.append("ʌ̃");
                     break;
                 case 350:
@@ -672,6 +682,7 @@ public class SoftKeyboard extends InputMethodService
                 default:
                     mComposing.append((char) primaryCode);
             }
+
             getCurrentInputConnection().setComposingText(mComposing, 1);
             updateShiftKeyState(getCurrentInputEditorInfo());
             updateCandidates();

@@ -3,7 +3,7 @@ package com.Labic.Comarca.TecladoWounMeu;
 import android.app.Application;
 
 /**
- * Created by ankit on 26/4/16.
+ * Proyecto Comarca
  */
 public class WounMeuKeyboard extends Application {
     @Override
