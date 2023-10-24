@@ -19,9 +19,9 @@
     </Row>
 
     <Row>
-        <Key android:codes="111,245,246,243" android:keyLabel="o" android:keyEdgeFlags="left"  android:popupCharacters="aãäá" android:popupKeyboard="@xml/keyboard_popup_template"/>
-        <Key android:codes="652,349,450,551" android:keyLabel="ʌ"/>
-            <Key android:codes="101,519,235,233" android:keyLabel="e" android:popupCharacters="eẽëé" android:popupKeyboard="@xml/keyboard_popup_template"/>
+        <Key android:codes="111,245,246,243" android:keyLabel="o" android:keyEdgeFlags="left"  android:popupCharacters="oõöó" android:popupKeyboard="@xml/keyboard_popup_template"/>
+        <Key android:codes="652" android:popupCharacters="" android:keyLabel="ʌ"/>
+        <Key android:codes="101,519,235,233" android:keyLabel="e" android:popupCharacters="eẽëé" android:popupKeyboard="@xml/keyboard_popup_template"/>
         <Key android:codes="97,227,228,225" android:keyLabel="a" android:popupCharacters="aãäá" android:popupKeyboard="@xml/keyboard_popup_template"/>
         <Key android:codes="105,297,237" android:keyLabel="i" android:popupCharacters="iĩí" android:popupKeyboard="@xml/keyboard_popup_template"/>
         <Key android:codes="117,361,250" android:keyLabel="u" android:popupCharacters="uũú" android:popupKeyboard="@xml/keyboard_popup_template"/>
@@ -49,11 +49,8 @@
         <Key
             android:codes="-2"
             android:keyLabel="\?123"
-            android:keyWidth="14%p" />
-        <Key
-            android:codes="-101"
-            android:keyLabel="🌍"
-            android:keyWidth="14%p" />
+            android:keyWidth="24%p" />
+
         <Key
             android:codes="44"
             android:keyLabel=","
@@ -62,15 +59,15 @@
         <Key android:codes="350" android:keyLabel="ʌ̈"/>
         <Key android:codes="351" android:keyLabel="ʌ́"/>
 
-        <Key
-            android:codes="-101"
-            android:keyLabel="😀"
-            android:keyWidth="14%p" />
+
         <Key
             android:codes="46"
             android:keyLabel="."
             android:keyWidth="13%p" />
-
+        <Key
+            android:codes="-101"
+            android:keyLabel="🌍"
+            android:keyWidth="18%p" />
     </Row>
     <Row>
         <Key

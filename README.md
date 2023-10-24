@@ -1,31 +1,7 @@
-# Keyboard
-
-This code teach us how we can develop our own custom keyboard.
-
-## Some Screenshots
-- Here
-
- ![1](https://github.com/AnkitDroidGit/Android-Custom-Keyboard/blob/master/art/1.png)
- ![1](https://github.com/AnkitDroidGit/Android-Custom-Keyboard/blob/master/art/2.png)
- ![1](https://github.com/AnkitDroidGit/Android-Custom-Keyboard/blob/master/art/3.png)
- ![1](https://github.com/AnkitDroidGit/Android-Custom-Keyboard/blob/master/art/4.png)
-
-
-
-## let's connect to learn together
-
-- [Twitter](https://twitter.com/KumarAnkitRKE)
-- [Github](https://github.com/AnkitDroidGit)
-- [LinkedIn](https://www.linkedin.com/in/kumarankitkumar/)
-- [Facebook](https://www.facebook.com/freeankit)
-- [Slack](https://ankitdroid.slack.com)
-- [Stackoverflow](https://stackoverflow.com/users/3282461/android)
-- [Android App](https://play.google.com/store/apps/details?id=com.freeankit.ankitprofile)
 
 ### License
 
-    Copyright 2017 Ankit Kumar
-    
+
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
     You may obtain a copy of the License at

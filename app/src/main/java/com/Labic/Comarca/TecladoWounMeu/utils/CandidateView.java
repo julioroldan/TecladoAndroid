@@ -1,6 +1,7 @@
 package com.Labic.Comarca.TecladoWounMeu.utils;
 
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -12,7 +13,14 @@ import android.view.View;
 
 import com.Labic.Comarca.TecladoWounMeu.R;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -22,6 +30,8 @@ public class CandidateView extends View {
     private static final int OUT_OF_BOUNDS = 10;
     private SoftKeyboard mService;
     private List<String> mSuggestions;
+
+    private ArrayList<String> wordSuggestions;
     private int mSelectedIndex;
     private int mTouchX = OUT_OF_BOUNDS;
     private Drawable mSelectionHighlight;
@@ -52,10 +62,11 @@ public class CandidateView extends View {
      * Construct a CandidateView for showing suggested words for completion.
      *
      * @param context
-     * @param attrs
      */
     public CandidateView(Context context) {
+
         super(context);
+
         mSelectionHighlight = context.getResources().getDrawable(android.R.drawable.list_selector_background);
         mSelectionHighlight.setState(
                 new int[]{
@@ -144,7 +155,7 @@ public class CandidateView extends View {
         }
         mTotalWidth = 0;
         if (mSuggestions == null) return;
-
+        LoadWordSuggestions();
         if (mBgPadding == null) {
             mBgPadding = new Rect(0, 0, 0, 0);
             if (getBackground() != null) {
@@ -192,12 +203,71 @@ public class CandidateView extends View {
             }
             x += wordWidth;
         }
+        try {
+
+
+        String suggestion = mSuggestions.get(0);
+        ArrayList<String> lst =GetProximasPalabras(5,suggestion,wordSuggestions);
+        int nextPosicion= x + X_GAP;
+        for (String palabra: lst) {
+            canvas.drawText(palabra, nextPosicion, y, paint);
+            nextPosicion+=x +X_GAP+20;
+
+        }
+        }
+        catch (Exception e)
+        {}
         mTotalWidth = x;
         if (mTargetScrollX != getScrollX()) {
             scrollToTarget();
         }
     }
+    private void LoadWordSuggestions()
+    {
+        wordSuggestions = palabrasClass.palabrasSugeridas();
+    }
+    private ArrayList<String> GetProximasPalabras(int numSugerencias, String palabraDada, ArrayList<String> palabras)
+    {
+        ArrayList<SugerenciaPalabra> sugerencias = new ArrayList<SugerenciaPalabra>();
+        ArrayList<String> res = new ArrayList<String>();
+        // Calcular la distancia de edición para cada palabra en 'palabras'
+        for (String palabra: palabras) {
+            int distancia = distanciaEdicion(palabra, palabraDada);
+            sugerencias.add(new SugerenciaPalabra(palabra, distancia));
+        }
+        Collections.sort(sugerencias, new Comparator<SugerenciaPalabra>() {
+            @Override
+            public int compare(SugerenciaPalabra s1, SugerenciaPalabra s2) {
+                return Integer.compare(s1.getDistancia(), s2.getDistancia());
+            }
+        });
+        for (int i = 0; i < Math.min(numSugerencias, sugerencias.size()); i++) {
+            res.add(sugerencias.get(i).getPalabra());
+        }
+        return res;
+    }
+    public static int distanciaEdicion(String palabra1, String palabra2) {
+        int m = palabra1.length();
+        int n = palabra2.length();
 
+        int[][] dp = new int[m + 1][n + 1];
+
+        for (int i = 0; i <= m; i++) {
+            for (int j = 0; j <= n; j++) {
+                if (i == 0) {
+                    dp[i][j] = j;
+                } else if (j == 0) {
+                    dp[i][j] = i;
+                } else if (palabra1.charAt(i - 1) == palabra2.charAt(j - 1)) {
+                    dp[i][j] = dp[i - 1][j - 1];
+                } else {
+                    dp[i][j] = 1 + Math.min(dp[i - 1][j], Math.min(dp[i][j - 1], dp[i - 1][j - 1]));
+                }
+            }
+        }
+
+        return dp[m][n];
+    }
     private void scrollToTarget() {
         int sx = getScrollX();
         if (mTargetScrollX > sx) {
@@ -297,4 +367,21 @@ public class CandidateView extends View {
         invalidate();
     }
 
+}
+class SugerenciaPalabra {
+    private String palabra;
+    private int distancia;
+
+    public SugerenciaPalabra(String palabra, int distancia) {
+        this.palabra = palabra;
+        this.distancia = distancia;
+    }
+
+    public String getPalabra() {
+        return palabra;
+    }
+
+    public int getDistancia() {
+        return distancia;
+    }
 }
