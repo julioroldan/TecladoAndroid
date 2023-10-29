@@ -143,7 +143,7 @@ public class CandidateView extends View {
         // Maximum possible width and desired height
         setMeasuredDimension(measuredWidth, resolveSize(desiredHeight, heightMeasureSpec));
     }
-
+    ArrayList<String> lst = new ArrayList<String>();
     /**
      * If the canvas is null, then only touch calculations are performed to pick the target
      * candidate.
@@ -204,12 +204,15 @@ public class CandidateView extends View {
             x += wordWidth;
         }
         try {
-
-
+            wordRects = new ArrayList<>();
+            lst = new ArrayList<String>();
         String suggestion = mSuggestions.get(0);
-        ArrayList<String> lst =GetProximasPalabras(5,suggestion,wordSuggestions);
+        lst  =GetProximasPalabras(5,suggestion,wordSuggestions);
         int nextPosicion= x + X_GAP;
         for (String palabra: lst) {
+
+            Rect rect = new Rect(nextPosicion, y, nextPosicion + (int) paint.getTextSize(), y + (int) paint.getTextSize());
+            wordRects.add(rect);
             canvas.drawText(palabra, nextPosicion, y, paint);
             nextPosicion+=x +X_GAP+20;
 
@@ -222,6 +225,7 @@ public class CandidateView extends View {
             scrollToTarget();
         }
     }
+    ArrayList<Rect> wordRects = new ArrayList<>();
     private void LoadWordSuggestions()
     {
         wordSuggestions = palabrasClass.palabrasSugeridas();
@@ -320,8 +324,24 @@ public class CandidateView extends View {
         switch (action) {
             case MotionEvent.ACTION_DOWN:
                 mScrolled = false;
+
+                String future="";
+
+                boolean existe=false;
+                for (int i = 0; i < wordRects.size(); i++) {
+                    Rect rect = wordRects.get(i);
+                    if (rect.left < x  && rect.right > x) {
+                            existe=true;
+                            future = lst.get(i);
+                            mService.getCurrentInputConnection().setComposingText(future,1);
+                            mService.getCurrentInputConnection().finishComposingText();
+                            break;
+                        }
+                    }
+
                 invalidate();
-                break;
+                return existe;
+
             case MotionEvent.ACTION_MOVE:
                 if (y <= 0) {
                     // Fling up!?
@@ -338,6 +358,7 @@ public class CandidateView extends View {
                         mService.pickSuggestionManually(mSelectedIndex);
                     }
                 }
+
                 mSelectedIndex = -1;
                 removeHighlight();
                 requestLayout();
