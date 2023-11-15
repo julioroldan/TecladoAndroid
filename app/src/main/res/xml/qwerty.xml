@@ -73,7 +73,7 @@
         <Key
             android:codes="32"
             android:isRepeatable="true"
-            android:keyLabel="wehöo"
+            android:keyLabel="wehuu"
             android:keyWidth="100%p" />
     </Row>
 </Keyboard>

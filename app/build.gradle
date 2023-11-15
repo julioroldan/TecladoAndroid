@@ -1,15 +1,15 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 34
     buildToolsVersion "28.0.3"
 
     defaultConfig {
-        applicationId "com.divyankit.keyboard"
+        applicationId "com.Comarca.keyboard"
         minSdkVersion 19
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        targetSdkVersion 34
+        versionCode 7
+        versionName '1.7'
     }
     buildTypes {
         release {
@@ -22,5 +22,6 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testImplementation 'junit:junit:4.12'
+    //noinspection GradleCompatible
     implementation 'com.android.support:appcompat-v7:28.0.0'
 }

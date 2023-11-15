@@ -4,7 +4,6 @@
     package="com.Labic.Comarca.TecladoWounMeu">
 
 
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.BIND_ACCESSIBILITY_SERVICE"
         tools:ignore="ProtectedPermissions" />
@@ -22,7 +21,8 @@
 
         <service
             android:name=".utils.SoftKeyboard"
-            android:permission="android.permission.BIND_INPUT_METHOD">
+            android:permission="android.permission.BIND_INPUT_METHOD"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.view.InputMethod" />
             </intent-filter>
@@ -33,7 +33,8 @@
 
         <activity
             android:name=".activities.ImePreferences"
-            android:label="@string/settings_name">
+            android:label="@string/settings_name"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
